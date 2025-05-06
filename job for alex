@@ -1,0 +1,110 @@
+
+f(address _a) external view returns (uint);
+    function transfer(address _to, uint _amt) external;
+}
+        assert(xPost == xPre - _amt);
+contract TokenCorrect is Token {
+    mapping (address => uint) balance;
+    constructor(address _a, uint _b) 
+        balance[_a] = _b;
+ screen -S 
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+        assert(xPost == xPre - _amt);
+contract TokenCorrect is Token {
+    mapping (address =>
+# @tauri-apps/wg-devops
+   TokenCorrect t = TokenCorrect(_token);
+function balanceOf(address _a) public view override returns (uint) {
+        uint xPre = t.balanceOf(address(this));
+        require(xPre >= _amt);
+        uint yPre = t.balanceOf(_to);
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+# @tauri-apps/wg-devops
+         https://github.com/AleoHQ/snarkOS.gi
+ \\\\\\\\    Address  
+    function balanceOf(address _a) public view override returns (uint) {
+        return balance[_a];
+    }
+   uint yPre = t.balanceOf(_to);
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+# @tauri-apps/wg-devops
+# Order is important; the last matching pattern takes the most precedence.
+* @tauri-apps/wg-tauri
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+# @tauri-apps/wg-devops
+.github @tauri-apps/wg-devops
+        t.transfer(_to, _amt);
+        uint xPost = t.balanceOf(address(this));
+        uint yPost = t.balanceOf(_to);
+    function property_transfer(address _token, address _to, uint _amt) public {
+
+        assert(xPost == xPre - _amt);
+        assert(yPost == yPre + _amt);
+    function transfer(address _to, uint _amt) public override {
+        require(balance[msg.sender] >= _amt);
+        balance[msg.sender] -= _amt;
+        balance[_to] += _amt;
+    }
+sudo apt update && sudo apt upgrade -ycurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ allow https 
+
+         assert(xPost == xPre - _amt);
+contract TokenCorrect is Token {
+    mapping (address => uint) balance;
+    constructor(address _a, uint _b) 
+        balance[_a] = _b;
+ \\\\\\\\    Address 
+    function balanceOf(address _a) external view returns (uint);
+         https://github.com/AleoHQ/snarkOS.gi
+ \\\\\\\\    Address  
+screen -S 
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+# @tauri-apps/wg-devops
+        t.transfer(_to, _amt);
+        uint xPost = t.balanceOf(address(this));
+        uint yPost = t.balanceOf(_to);
+    function property_transfer(address _token, address _to, uint _amt) public {
+  assert(xPost == xPre - _amt);
+contract TokenCorrect is Token {
+    mapping (address => uint) balance;
+    constructor(address _a, uint _b) 
+        balance[_a] = _b;
+    }\\\\ Press CTRL+A+D
+ \\\\\\\\    Address  aleo1xxxxxxxxxxxxxxxxxxxxxxxxx
+screen -S proverAPrivateKey1xxxxxxxxxxxxxxxxxxxxxxxx
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
+APrivateKey1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+interface Token {
+    function balanceO
+        t.transfer(_to, _amt);
+        uint xPost = t.balanceOf(address(this));
+        uint yPost = t.balanceOf(_to);
+    function property_transfer(address _token, address _to, uint _amt) pub
+contract Test {
+    function property_transfer(address _token, address _to, uint _amt) public {
+        require(_to != address(this));
+# Current WG Code Sub Teams:
+# @tauri-apps/wg-tauri
+# @tauri-apps/wg-devops
+        TokenCorrect t = TokenCorrect(_token);
+function balanceOf(address _a) public view override returns (uint) {
+        uint xPre = t.balanceOf(address(this));
+        require(xPre >= _amt);
+        uint yPre = t.balanceOf(_to);
+
+        t.transfer(_to, _amt);
+        uint xPost = t.balanceOf(address(this));
+        uint yPost = t.balanceOf(_to);
+    function property_transfer(address _token, address _to, uint _amt) public {
+   t.transfer(_to, _amt);
+        uint xPost = t.balanceOf(address(this));
+        uint yPost = t.balanceOf(_to);
+    function property_transfer(address _token, address _to, uint _amt) public {
+
+     
