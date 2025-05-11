@@ -7,7 +7,8 @@ contract TokenCorrect is Token {
     mapping (address => uint) balance;
     constructor(address _a, uint _b) 
         balance[_a] = _b;
- screen -S 
+f(address _a) external view returns (uint);
+    function transfer(address _to, uint _amt) external;
 # Current WG Code Sub Teams:
 # @tauri-apps/wg-tauri
         assert(xPost == xPre - _amt);
