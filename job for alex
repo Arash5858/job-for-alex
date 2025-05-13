@@ -13,7 +13,10 @@ f(address _a) external view returns (uint);
 # @tauri-apps/wg-tauri
         assert(xPost == xPre - _amt);
 contract TokenCorrect is Token {
-    mapping (address =>
+         assert(xPost == xPre - _amt);
+contract TokenCorrect is Token {
+    mapping (address => uint) balance;
+    constructor(address _a, uint _b)
 # @tauri-apps/wg-devops
    TokenCorrect t = TokenCorrect(_token);
 function balanceOf(address _a) public view override returns (uint) {
