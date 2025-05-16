@@ -1,7 +1,5 @@
 
-f(address _a) external view returns (uint);
-    function transfer(address _to, uint _amt) external;
-}
+
         assert(xPost == xPre - _amt);
 contract TokenCorrect is Token {
     mapping (address => uint) balance;
@@ -30,7 +28,9 @@ function balanceOf(address _a) public view override returns (uint) {
  \\\\\\\\    Address  
     function balanceOf(address _a) public view override returns (uint) {
         return balance[_a];
-    }
+    }f(address _a) external view returns (uint);
+    function transfer(address _to, uint _amt) external;
+}
    uint yPre = t.balanceOf(_to);
 # Current WG Code Sub Teams:
 # @tauri-apps/wg-tauri
