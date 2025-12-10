@@ -1,0 +1,249 @@
+TaskBeacon/
+├─ LICENSE
+├─ README.md
+├─ .gitignore
+├─ pyproject.toml
+├─ taskbeacon/
+│  ├─ __init__.py
+│  └─ cli.py
+└─ .github/
+   └─ workflows/
+      └─ python-package.yml
+# TaskBeacon
+
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
+Designed for quick personal use and as a simple example project to publish on GitHub.
+
+## Features
+- Add tasks with optional due date and priority
+- List tasks (all / pending / completed)
+- Mark tasks complete
+- Remove tasks
+- Simple text search
+
+## Requirements
+- Python 3.8+
+
+## Installation
+Clone the repository and install (optional virtual environment recommended):
+
+```bash
+git clone https://github.com/<your-username>/TaskBeacon.git
+cd TaskBeacon
+python -m venv .venv
+source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+pip install -e .
+# TaskBeacon
+
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
+Designed for quick personal use and as a simple example project to publish on GitHub.
+
+## Features
+- Add tasks with optional due date and priority
+- List tasks (all / pending / completed)
+- Mark tasks complete
+- Remove tasks
+- Simple text search
+
+## Requirements
+- Python 3.8+
+
+## Installation
+Clone the repository and install (optional virtual environment recommended):
+
+```bash
+git clone https://github.com/<your-username>/TaskBeacon.git
+cd TaskBeacon
+python -m venv .venv
+source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+pip install -e .
+# add a task
+taskbeacon add "Buy groceries" --due 2025-12-15 --priority high
+
+# list tasks
+taskbeacon list
+
+# list only pending tasks
+taskbeacon list --status pending
+
+# mark task 1 as completed
+taskbeacon complete 1
+
+# remove task 2
+taskbeacon remove 2
+
+# search tasks by keyword
+taskbeacon search groceries
+# add a task
+taskbeacon add "Buy groceries" --due 2025-12-15 --priority high
+
+# list tasks
+taskbeacon list
+
+# list only pending tasks
+taskbeacon list --status pending
+
+# mark task 1 as completed
+taskbeacon complete 1
+
+# remove task 2
+taskbeacon remove 2
+
+# search tasks by keyword
+taskbeacon search groceries
+#!/usr/bin/env python3
+"""
+TaskBeacon - simple CLI task manager
+"""
+
+from __future__ import annotations
+import argparse
+import json
+import os
+from datetime import datetime
+from typing import List, Dict, Any
+
+DATA_FILE = os.path.expanduser("~/.taskbeacon_tasks.json")
+
+def load_tasks() -> List[Dict[str, Any]]:
+    if not os.path.exists(DATA_FILE):
+        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+def save_tasks(tasks: List[Dict[str, Any]]) -> None:
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(tasks, f, indent=2, ensure_ascii=False)
+
+def next_id(tasks: List[Dict[str, Any]]) -> int:
+    if not tasks:
+        return 1
+    return max(t["id"] for t in tasks) + 1
+
+def add_task(args: argparse.Namespace) -> None:
+    tasks = load_tasks()
+    task = {
+        "id": next_id(tasks),
+        "title": args.title,
+        "created": datetime.utcnow().isoformat() + "Z",
+        "due": args.due,
+        "priority": args.priority,
+        "completed": False,
+        "completed_at": None
+    }
+    tasks.append(task)
+    save_tasks(tasks)
+    print(f"Added task {task['id']}: {task['title']}")
+
+def list_tasks(args: argparse.Namespace) -> None:
+    tasks = load_tasks()
+    status = args.status
+    def keep(t):
+        if status == "all":
+            return True
+        if status == "pending":
+            return not t.get("completed", False)
+        if status == "completed":
+            return t.get("completed", False)
+        return True
+    filtered = [t for t in tasks if keep(t)]
+    if not filtered:
+        print("No tasks found.")
+        return
+    for t in sorted(filtered, key=lambda x: (x.get("completed", False), x.get("priority") or "", x.get("due") or "")):
+        mark = "✓" if t.get("completed") else " "
+        due = f" due:{t.get('due')}" if t.get("due") else ""
+        pr = f" pr:{t.get('priority')}" if t.get("priority") else ""
+        print(f"[{mark}] {t['id']}: {t['title']}{due}{pr}")
+
+def complete_task(args: argparse.Namespace) -> None:
+    tasks = load_tasks()
+    tid = args.id
+    for t in tasks:
+        if t["id"] == tid:
+            if t.get("completed"):
+                print(f"Task {tid} is already completed.")
+                return
+            t["completed"] = True
+            t["completed_at"] = datetime.utcnow().isoformat() + "Z"
+            save_tasks(tasks)
+            print(f"Marked task {tid} complete.")
+            return
+    print(f"Task {tid} not found.")
+
+def remove_task(args: argparse.Namespace) -> None:
+    tasks = load_tasks()
+    tid = args.id
+    new = [t for t in tasks if t["id"] != tid]
+    if len(new) == len(tasks):
+        print(f"Task {tid} not found.")
+        return
+    save_tasks(new)
+    print(f"Removed task {tid}.")
+
+def search_tasks(args: argparse.Namespace) -> None:
+    tasks = load_tasks()
+    q = args.query.lower()
+    found = [t for t in tasks if q in t["title"].lower()]
+    if not found:
+        print("No matching tasks.")
+        return
+    for t in found:
+        status = "done" if t.get("completed") else "pending"
+        print(f"{t['id']}: {t['title']} [{status}]")
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="taskbeacon", description="TaskBeacon: small CLI task manager")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_add = sub.add_parser("add", help="Add a new task")
+    p_add.add_argument("title", help="Task title")
+    p_add.add_argument("--due", help="Due date (YYYY-MM-DD)", default=None)
+    p_add.add_argument("--priority", help="Priority (low|medium|high)", default=None)
+    p_add.set_defaults(func=add_task)
+
+    p_list = sub.add_parser("list", help="List tasks")
+    p_list.add_argument("--status", choices=["all","pending","completed"], default="pending")
+    p_list.set_defaults(func=list_tasks)
+
+    p_complete = sub.add_parser("complete", help="Mark a task as completed")
+    p_complete.add_argument("id", type=int, help="Task ID")
+    p_complete.set_defaults(func=complete_task)
+
+    p_remove = sub.add_parser("remove", help="Remove a task")
+    p_remove.add_argument("id", type=int, help="Task ID")
+    p_remove.set_defaults(func=remove_task)
+
+    p_search = sub.add_parser("search", help="Search tasks by keyword")
+    p_search.add_argument("query", help="Search query")
+    p_search.set_defaults(func=search_tasks)
+
+    return parser
+
+def main() -> None:
+    parser = build_parser()
+    args = parser.parse_args()
+    args.func(args)
+
+if __name__ == "__main__":
+    main()
+# Byte-compiled / virtual env
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# TaskBeacon data
+/.taskbeacon_tasks.json
