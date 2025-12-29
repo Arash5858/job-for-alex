@@ -35,7 +35,8 @@ python -m venv .venv
 source .venv/bin/activate   # or .venv\Scripts\activate on Windows
 pip install -e .
 # TaskBeacon
-
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
 TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
 It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
 Designed for quick personal use and as a simple example project to publish on GitHub.
