@@ -86,31 +86,6 @@ taskbeacon add "Buy groceries" --due 2025-12-15 --priority high
 # list tasks
 taskbeacon list
 
-# list only pending tasks
-taskbeacon list --status pending
-
-# mark task 1 as completed
-taskbeacon complete 1
-
-# remove task 2
-taskbeacon remove 2
-
-# search tasks by keyword
-taskbeacon search groceries
-#!/usr/bin/env python3
-"""
-TaskBeacon - simple CLI task manager
-"""
-
-from __future__ import annotations
-import argparse
-import json
-import os
-from datetime import datetime
-from typing import List, Dict, Any
-
-DATA_FILE = os.path.expanduser("~/.taskbeacon_tasks.json")
-
 def load_tasks() -> List[Dict[str, Any]]:
     if not os.path.exists(DATA_FILE):
         return []
@@ -128,42 +103,6 @@ def next_id(tasks: List[Dict[str, Any]]) -> int:
     if not tasks:
         return 1
     return max(t["id"] for t in tasks) + 1
-
-def add_task(args: argparse.Namespace) -> None:
-    tasks = load_tasks()
-    task = {
-        "id": next_id(tasks),
-        "title": args.title,
-        "created": datetime.utcnow().isoformat() + "Z",
-        "due": args.due,
-        "priority": args.priority,
-        "completed": False,
-        "completed_at": None
-    }
-    tasks.append(task)
-    save_tasks(tasks)
-    print(f"Added task {task['id']}: {task['title']}")
-
-def list_tasks(args: argparse.Namespace) -> None:
-    tasks = load_tasks()
-    status = args.status
-    def keep(t):
-        if status == "all":
-            return True
-        if status == "pending":
-            return not t.get("completed", False)
-        if status == "completed":
-            return t.get("completed", False)
-        return True
-    filtered = [t for t in tasks if keep(t)]
-    if not filtered:
-        print("No tasks found.")
-        return
-    for t in sorted(filtered, key=lambda x: (x.get("completed", False), x.get("priority") or "", x.get("due") or "")):
-        mark = "✓" if t.get("completed") else " "
-        due = f" due:{t.get('due')}" if t.get("due") else ""
-        pr = f" pr:{t.get('priority')}" if t.get("priority") else ""
-        print(f"[{mark}] {t['id']}: {t['title']}{due}{pr}")
 
 def complete_task(args: argparse.Namespace) -> None:
     tasks = load_tasks()
