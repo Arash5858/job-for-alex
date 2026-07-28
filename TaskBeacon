@@ -38,11 +38,6 @@ python -m venv .venv
 source .venv/bin/activate   # or .venv\Scripts\activate on Windows
 pip install -e .
 # TaskBeacon
-TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
-It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
-TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
-It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
-Designed for quick personal use and as a simple example project to publish on GitHub.
 
 ## Features
 - Add tasks with optional due date and priority
@@ -58,10 +53,12 @@ Designed for quick personal use and as a simple example project to publish on Gi
 Clone the repository and install (optional virtual environment recommended):
 
 ```bash
-git clone https://github.com/<your-username>/TaskBeacon.git
-cd TaskBeacon
-python -m venv .venv
-source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
+Designed for quick personal use and as a simple example project to publish on GitHub.
+ # or .venv\Scripts\activate on Windows
 pip install -e .
 # add a task
 taskbeacon add "Buy groceries" --due 2025-12-15 --priority high
