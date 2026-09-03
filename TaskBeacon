@@ -21,7 +21,9 @@ Designed for quick personal use and as a simple example project to publish on Gi
 - Mark tasks complete
 - Remove tasks
 - Simple text search
-
+TaskBeacon is a small, dependency-minimal command-line task manager written in Python.
+It stores tasks in a local JSON file and supports add, list, complete, remove, and search operations.
+Designed for quick personal use and as a simple example project to publish on GitHub.
 ## Requirements
 - Python 3.8+
 
